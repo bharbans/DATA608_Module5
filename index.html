@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <title>Brad Harbans Module 5</title>
+    </head>
+    <body>
+        <h1>Module 5 Assignment</h1>
+        <h2>Brad Harbans</h2>
+        <ol>
+            <li>
+                Create a function to reverse any word that you type in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage.
+                <script type="text/javascript">
+                    function reverse_word() {
+                        var word = document.getElementById("word_q1").value
+                        var word_reversed = word.split("").reverse().join("");
+
+                        var t = document.getElementById('reversed_word');
+                        t.innerHTML = "<p>Reversed Word: " + word_reversed +"</p>"
+                    }
+                </script>
+
+                <p> Enter a word to be reversed:</p>
+                <form id="question_1">
+                    <label>Word:</label>
+				    <input id="word_q1" type="text">
+                    <input type="button" value="Reverse" onClick="reverse_word();">
+                </form>
+                <p><div id='reversed_word'></div> </p>
+            </li>
+
+            <li>
+                Create a function that takes an input number, and prints a table with the first 20 multiples of the number.
+                <script type="text/javascript">
+                    function create_table(num) {
+
+                        var num = document.getElementById("num_q2").value
+                        var table = "<table> <tr> <th> Multiples of " + num + "</th></tr>"
+                        for (let i = 1; i < 21; i++) {
+                            table += "<tr><td>" + i * num + "</td></tr>";
+                        }
+                        table += "</table>";
+
+                        var t = document.getElementById('table_q2');
+                        t.innerHTML = table;
+                    }
+                </script>
+
+                <p> Enter a number to be enumerate the first 20 multiples:</p>
+                <form id="question_2">
+                    <label>Number:</label>
+				    <input id="num_q2" type="number">
+                    <input type="button" value="Enumerate" onClick="create_table();">
+                </form>
+                <p><div id='table_q2'></div> </p>
+
+            </li>
+
+            <li>
+                Write a function to load the presidents.csv data and display the data as an html table (you may use a cdv parser from any available library, though I encourage you to try the d3 one)
+
+                <script type="text/javascript">
+                    d3.csv("data/hpi.csv", function(data) {
+                        console.log(data)
+                    });
+                </script>
+
+            </li>
+
+            <li>Write a function that will return that president’s height & weight when you type it in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage</li>
+        </ol>
+
+    </body>
+
+
+</html>
