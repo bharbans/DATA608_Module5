@@ -1,6 +1,6 @@
 <html>
     <head>
-        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3.v5.min.js"> </script>
         <title>Brad Harbans Module 5</title>
     </head>
     <body>
@@ -61,8 +61,12 @@
                 <div id="table_q3"></div>
 
                 <script type="text/javascript">
-                    d3.csv("https://raw.githubusercontent.com/bharbans/DATA608_Module5/main/data/presidents.csv", function(data) {
-                        
+                    
+                    const presidents_dataset = d3.csv("https://raw.githubusercontent.com/bharbans/DATA608_Module5/main/data/presidents.csv").then( function(data) {  
+                        return data;
+                    });
+
+                    const pres_table = presidents_dataset.then(function (data) {
                         var columns = ['Name','Height','Weight'];
                         var table = d3.select('#table_q3').append('table');
                         var table_header = table.append('thead').append("tr");
@@ -92,13 +96,59 @@
                             .enter()
                             .append("td")
                             .text(function (d) { return d.value });
-                    }
-                );
+                        return data;
+                            
+                    });
                 </script>
 
             </li>
 
-            <li>Write a function that will return that president’s height & weight when you type it in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage</li>
+            <li>
+                Write a function that will return that president’s height & weight when you type it in. This can be typed into either an input box or an alert box, and then print the result in a box or on the webpage
+                <script type="text/javascript">
+
+                pres_table.then(function(data){
+                        function dropdownChange (){
+                            var president = d3.select(this).property('value')
+                            var new_pres_data = data.filter(function(d){ return d.Name == president });
+
+                            console.log(new_pres_data)
+                            var president_text = d3.select('#president_info')
+                            
+                            president_text.selectAll("text").remove();
+
+                            president_text.text("Name: "+ president)
+                                            .append("p")
+                                            .text("Height: "+ new_pres_data[0].Height +" inches")
+                                            .append("p")
+                                            .text("Weight: "+new_pres_data[0].Weight + " lbs");
+                        };
+
+                        var dropDown = d3.select("#dropdown_container")
+                                        .text("Please choose from the dropdown: ")
+                                        .append("select")
+                                        .attr("class","selection")
+                                        .attr("name","president")
+                                        .on("change", dropdownChange);
+
+                        var options = dropDown.selectAll("option")
+                                        .data(data)
+                                        .enter()
+                                        .append("option")
+                                        .text(function(d) { 
+                                            return d.Name;}
+                                        )
+                                        .attr("value",function(d) { 
+                                            return d.Name;}
+                                        );
+                    });
+                               
+
+                </script>
+
+                <p><div id='dropdown_container'></div> </p>
+                <p><div id='president_info'></div> </p>
+            </li>
         </ol>
 
     </body>
